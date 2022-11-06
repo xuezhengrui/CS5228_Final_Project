@@ -2,7 +2,7 @@
 
 The repository includes:
 
-- Task 1 (House Price Prediction):  
+- **Task 1 (House Price Prediction):**  
 1) Python Script for EDA & Preprocessing  
 2) Linear Regression Model of Best Performance  
 3) Multi-layer Preceptrons (MLP) Model of Best Performance  
@@ -12,7 +12,7 @@ The repository includes:
 7) Random Forest Regression Model Hyper-parameter Tuning Code  
 8) Original Dataset and Auxiliary Dataset  
 
-- Task 3
+- **Task 3：**    
 
 ## Getting Started
 1. Run .ipynb files with suffix '_Best_Perform' in the directory ./Task1/model, price prediction .csv file on test data will be produced for Kaggle submission
