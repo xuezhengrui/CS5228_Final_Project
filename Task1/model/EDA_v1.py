@@ -14,6 +14,7 @@ from sklearn.metrics import mean_squared_error as mse
 
 class EDA():
     def __init__(self, df_train, df_test=None):
+        self.raw_df = df_train.copy()
         self.df = df_train
         self.bed_bath_size_model = None
         self.df_test = df_test
@@ -590,6 +591,51 @@ class EDA():
         # calculate population density for test data
         self.cal_subzone_population_density(df_subzone, for_test=True)
     
+    # for ablation 
+
+    def get_col_idx(self, df):
+            raw_col_lst = self.raw_df.columns.values.tolist()
+            col_lst = df.columns.values.tolist()
+            raw_col_lst += ['furnish', 'pl_area']
+            # print(raw_col_lst)
+            col_idx_dict = {}
+
+            for i, c in enumerate(col_lst):
+                if c in raw_col_lst:
+                    col_idx_dict[c] = [i]
+                else:
+                    cc = '_'.join(c.split('_')[:-1])
+                    if cc in raw_col_lst:
+                        if cc in col_idx_dict:
+                            col_idx_dict[cc].append(i)
+                        else:
+                            col_idx_dict[cc] = [i]
+                    else:
+                        print('error! --> {}, {}'.format(c, cc))
+
+            return col_idx_dict
+
+    def setup_ablation(self):
+        self.str_clean_up()
+        self.handle_train_abnormal()
+        self.property_type_method()
+        
+        self.furnishing_method()
+        
+        self.tenure_method()
+        self.tenure_method(for_test=True)
+        
+        self.built_year_method2()
+        self.built_year_method2(for_test=True)
+        
+        self.planning_area_method()
+        
+        drop_cols = ['listing_id', 'title', 'address', 'property_name', 'floor_level', 'available_unit_types',
+                    'total_num_units', 'property_details_url', 'elevation','subzone', 'planning_area', 'furnishing',
+                    'property_type', 'num_beds', 'num_baths']
+        
+        self.df.drop(columns=drop_cols, inplace=True)
+        self.df_test.drop(columns=drop_cols,inplace=True) 
      
         
 
